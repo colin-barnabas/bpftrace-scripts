@@ -1,0 +1,30 @@
+#!/usr/bin/env bpftrace
+
+#include <linux/socket.h>
+
+BEGIN
+{
+    printf("Tracing openvpn sendto(2). Ctrl-C to end.\n");
+
+    @fam2str[AF_UNSPEC] = "AF_UNSPEC";
+    @fam2str[AF_UNIX] = "AF_UNIX";
+    @fam2str[AF_INET] = "AF_INET";
+    @fam2str[AF_INET6] = "AF_INET6";
+}
+
+tracepoint:syscalls:sys_enter_sendto
+/comm == "openvpn"/
+{
+    $sa_in = (struct sockaddr_in *)args->addr;
+    $in_addr = $sa_in->sin_addr;
+    $addr = ntop($sa_in->sin_family, $in_addr.s_addr);
+
+    if (@fam2str[$sa_in->sin_family] == "AF_INET") {
+        printf("%s -> %s\n", comm, $addr);
+    }
+}
+
+END
+{
+    clear(@fam2str);
+}
