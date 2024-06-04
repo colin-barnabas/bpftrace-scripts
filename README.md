@@ -8,9 +8,9 @@ Simple script to attach to OpenVPN process, trace `sendto(2)` system call, parse
   
   `$ expressvpn connect usla1`
   
-  ```sh
+  `# bpftrace ./ovpn_sendto.bt`
   
-    # bpftrace ./ovpn_sendto.bt
+  ```shell
     Attaching 3 probes...
     Tracing openvpn sendto(2). Ctrl-C to end.
     openvpn -> 45.38.57.61
