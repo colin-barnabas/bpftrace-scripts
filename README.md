@@ -3,8 +3,6 @@
 ## ovpn_sendto.bt
 Simple script to attach to OpenVPN process, trace `sendto(2)` system call, parse and print IP address. Created to snoop ExpressVPN server IPs for manually updating `iptables(8)`. 
 
-<details>
-  <summary>Ex.</summary>
   
   `$ expressvpn connect usla1`
   
@@ -18,5 +16,3 @@ Simple script to attach to OpenVPN process, trace `sendto(2)` system call, parse
     openvpn -> 45.38.57.61
     ^C  
   ```
-
-</details>
